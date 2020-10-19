@@ -58,7 +58,6 @@ Later, you can use this ``AuthorizationCode`` database model to handle ``authori
 grant type. Here is how::
 
     from authlib.oauth2.rfc6749 import grants
-    from authlib.common.security import generate_token
 
     class AuthorizationCodeGrant(grants.AuthorizationCodeGrant):
         def save_authorization_code(self, code, request):
@@ -76,8 +75,8 @@ grant type. Here is how::
 
         def query_authorization_code(self, code, client):
             try:
-                item = OAuth2Code.objects.get(code=code, client_id=client.client_id)
-            except OAuth2Code.DoesNotExist:
+                item = AuthorizationCode.objects.get(code=code, client_id=client.client_id)
+            except AuthorizationCode.DoesNotExist:
                 return None
 
             if not item.is_expired():
